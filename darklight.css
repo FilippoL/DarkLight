@@ -1,0 +1,26 @@
+@font-face {
+    font-family: Idilica Regular;
+    src: url(fonts/Idilica.ttf);
+}
+
+div {
+    font-family: titleFont;
+	}
+
+@font-face {
+    font-family: NewYear;
+    src: url(fonts/NewYear-2017.otf);
+} 
+
+div {
+    font-family: numberFont;
+	}
+
+@font-face {
+    font-family: Pixellari;
+    src: url(fonts/Pixellari.ttf);
+}
+
+div {
+    font-family: pixelFont;
+	}
