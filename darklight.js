@@ -37,13 +37,13 @@ function DarkLightGame()
 	level1.src = "pics/LEVEL_01/LEVEL_Wall_01.png";
 
 	var stonebox = new Image();
-	stonebox.src = "assets/UI/Stone_bg.png";
+	stonebox.src = "Assets/UI/Stone_bg.png";
 
 	var stone = new Image();
-	stone.src = "assets/UI/Stone.png";
+	stone.src = "Assets/UI/Stone.png";
 
 	var smallstone = new Image()
-	smallstone.src = "assets/UI/Stone_small.png";
+	smallstone.src = "Assets/UI/Stone_small.png";
 
 	var wallstextures = [];
 
@@ -51,7 +51,7 @@ function DarkLightGame()
 
 
 	var music = new Audio("music/music.mp3");
-	
+
 
 	var wide2 = new Image();
 	wide2.src = "pics/Walls/wide-2.png";
@@ -137,17 +137,15 @@ function DarkLightGame()
 	//Player Anmination Frames
 	var walkFrames = new Array();
 	var dieFrames = new Array();
-	
+
 	for (var i = 0; i < 12; i++)
 		{
 			walkFrames.push(new Image());
 			dieFrames.push(new Image());
-			
+
 			walkFrames[i].src ="Assets/PLAYER_ANIM/Character_Walk/Character_Walk_"+i+".png";
 			dieFrames [i].src ="Assets/PLAYER_ANIM/Character_Die/Character_Die_"  +i+".png";
 		}
-
-		 
 	var gamestate =0;
 	//0 - MENU
 	//1 - GAME
@@ -163,12 +161,12 @@ function DarkLightGame()
 	window.addEventListener('keydown', function(e)		//Event listener for key presses
 		{
 			keysDown[e.keyCode] = true, false;
-			
+
 		});
 	window.addEventListener('keyup', function(e)		//Event listener for key releases
 		{
-			delete keysDown[e.keyCode];	
-		
+			delete keysDown[e.keyCode];
+
 		});
 
 	music.addEventListener('ended', function() {
@@ -178,7 +176,7 @@ function DarkLightGame()
 
 	//LISENING FOR MOUSE EVENT
 	canvas.addEventListener('click', function canvas_click(ev)  //Detecting mouse CLICK
-	{ 
+	{
 
 	mx = ev.clientX - canvas.offsetLeft; //Pointer Horizontal coord - Pixels off set from Left
 	my = ev.clientY - canvas.offsetTop;  //Pointer Vertical coord - Pixels off set from Right
@@ -229,7 +227,7 @@ function DarkLightGame()
 	}
 
 	//var lightwave = new Lightwave (mx, my);
-	//lightwave.create();	
+	//lightwave.create();
 	//lightwaves.push(lightwave);
 
 	//for (var i = 0; i < 8; i++)
@@ -240,7 +238,7 @@ function DarkLightGame()
 
 	});
 
-	canvas.addEventListener('mousemove',function canvas_mousemove(ev) //Detecting mouse position (X,Y)  
+	canvas.addEventListener('mousemove',function canvas_mousemove(ev) //Detecting mouse position (X,Y)
 	{
 
 	mouseX = ev.clientX - canvas.offsetLeft; //Pointer Horizontal coord - Pixels off set from Left
@@ -260,15 +258,15 @@ function DarkLightGame()
 
 	if ( window.addEventListener ) 						//Event listener for Konami code input
 		{
-			var state1 = 0; 
+			var state1 = 0;
 			var konami = [38,38,40,40,37,39,37,39,66,65];
-		  	window.addEventListener("keydown", function(e) 
+		  	window.addEventListener("keydown", function(e)
 		  	{
 			    if (e.keyCode == konami[state1])
 			    {
 			    	state1++;
-			    }	
-			    else 
+			    }
+			    else
 			    {
 			    	state1 = 0;
 			    }
@@ -287,10 +285,10 @@ function DarkLightGame()
 			},
 		true);
 	}
-	
+
 	//FUNCTION DEFINITIONS
 
-	var Player = 
+	var Player =
 	{
 		x: 500,
 		y: height/2,
@@ -308,7 +306,7 @@ function DarkLightGame()
 		anim_deathframe:0,
 		animDie_play:false,
 		moving:false,
-		
+
 		draw: function()
 		{
 
@@ -319,22 +317,22 @@ function DarkLightGame()
 				dy = -(mouseY - Player.y);
 				dx = -(mouseX - Player.x);
 				var angle = Math.atan2(-dy, dx) + Math.PI/2;
-				
+
 				ctx.save();
 				ctx.translate(this.x, this.y);
 				ctx.rotate(-angle);
 				ctx.translate(-this.x, -this.y);
-				
+
 				ctx.drawImage(walkFrames[0], this.x-100, this.y-100);
 				ctx.restore();
-				
+
 				this.animtimer++;
 				if (this.animtimer > this.animdelay)
 				{
 					this.animtimer = 0;
 					this.anim_playframe++;
 				}
-				 
+
 				if(this.anim_playframe>11){this.anim_playframe=0;}
 			}
 			if (this.animDie_play==false && this.moving==true)
@@ -344,22 +342,22 @@ function DarkLightGame()
 				dy = -(mouseY - Player.y);
 				dx = -(mouseX - Player.x);
 				var angle = Math.atan2(-dy, dx) + Math.PI/2;
-				
+
 				ctx.save();
 				ctx.translate(this.x, this.y);
 				ctx.rotate(-angle);
 				ctx.translate(-this.x, -this.y);
-				
+
 				ctx.drawImage(walkFrames[this.anim_playframe], this.x-100, this.y-100);
 				ctx.restore();
-				
+
 				this.animtimer++;
 				if (this.animtimer > this.animdelay - 2)
 				{
 					this.animtimer = 0;
 					this.anim_playframe++;
 				}
-				 
+
 				if(this.anim_playframe>11){this.anim_playframe=0;}
 			}
 			else if (this.animDie_play==true)
@@ -373,7 +371,7 @@ function DarkLightGame()
 				}
 				if(this.anim_deathframe>11)
 				{
-					this.anim_deathframe=0; 
+					this.anim_deathframe=0;
 					this.animDie_play=false;
 					Player.lives -= 1;
 					switch (gamestate)
@@ -400,15 +398,15 @@ function DarkLightGame()
 					}
 				}
 			}
-			
+
 			var gradient;
 			 // Create gradient
 		      gradient = ctx.createRadialGradient(Player.x, Player.y, 5, Player.x + Math.sin(Player.flicker) * 10, Player.y +Math.cos(Player.flicker) * 5, 100 + 8 *Math.sin(Player.flicker));
-		      
+
 		      // Add colors
 		      gradient.addColorStop(0.000, 'rgba(155, 65, 0, 0)');
 		      gradient.addColorStop(1.000, 'rgba(0, 0, 0, 1.000)');
-		      
+
 		      // Fill with gradient
 		      ctx.fillStyle = gradient;
 		      ctx.fillRect(0, 0, width, height);
@@ -417,7 +415,7 @@ function DarkLightGame()
 		{
 			var size = 20;
 			ctx.drawImage(heartbox, 28, height- 75);
-			for (var i = 0; i < Player.lives; i++) 
+			for (var i = 0; i < Player.lives; i++)
 			{
 				ctx.beginPath();
 				ctx.drawImage(heart, 50 + 35*i, height - 50);
@@ -444,14 +442,14 @@ function DarkLightGame()
 			if (!this.animDie_play)
 			{
 				if (65 in keysDown)	//A
-				{	
+				{
 					if (Player.x > 5)
 					{
 						this.moving=true;
 						Player.x -= Player.speed; //* dt;
 					}
 				}
-				
+
 				else if (83 in keysDown) //S
 				{
 					if (Player.y < height )
@@ -479,7 +477,7 @@ function DarkLightGame()
 				}
 				else{this.moving=false;}
 			}
-			
+
 		},
 		update(dt)
 		{
@@ -612,7 +610,7 @@ function DarkLightGame()
 				this.width = 30*16;
 				return;
 			}
-			
+
 			if (this.type ==  "WIDE-19")
 			{
 				this.length = 30*19;
@@ -638,13 +636,13 @@ function DarkLightGame()
 				return;
 			}
 			if (this.type ==  "TALL-19")
-			{	
+			{
 				this.length = 30;
 				this.width = 30*19;
 				return;
 			}
 			if (this.type ==  "TALL-23")
-			{	
+			{
 				this.length = 30;
 				this.width = 30*23;
 				return;
@@ -710,7 +708,7 @@ function DarkLightGame()
 				return;
 			}
 			if (this.type == "WIDE-23")
-			{	
+			{
 				this.length = 30 * 23;
 				this.width = 30;
 				return;
@@ -730,9 +728,9 @@ function DarkLightGame()
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
 			ctx.translate(-this.x, -this.y);
-			
-			
-			
+
+
+
 
 			switch(this.type)
 			{
@@ -912,7 +910,7 @@ function DarkLightGame()
 	{
 		this.x = x,
 		this.y = y,
-		this.angle = angle, 
+		this.angle = angle,
 		this.speed = 5,
 		this.waved = false;
 		this.lifetime = 100,
@@ -980,7 +978,7 @@ function DarkLightGame()
 			var constant = 1.2;
 
 			ctx.strokeStyle = "rgba(255,255,255," + (constant + Math.sin(this.theta)) + ")";
-			ctx.lineWidth = this.thickness;	
+			ctx.lineWidth = this.thickness;
 			ctx.beginPath();
 
 			for (var i =0; i< this.particles.length; i++)
@@ -1032,7 +1030,7 @@ function DarkLightGame()
 			var constant = 1.2;
 
 			ctx.strokeStyle = "rgba(255,255,255," + (constant + Math.sin(this.theta)) + ")";
-			ctx.lineWidth = this.thickness;	
+			ctx.lineWidth = this.thickness;
 			ctx.beginPath();
 
 			for (var i =0; i< this.particles.length; i++)
@@ -1084,7 +1082,7 @@ function DarkLightGame()
 		}
 	}
 
-	
+
 
 	/*function Button(x,y,w,h)
 	{
@@ -1110,7 +1108,7 @@ function DarkLightGame()
 
 	this.konamicheat = function()						//Konami code function
 	{
-		
+
 	}
 
 
@@ -1124,7 +1122,7 @@ function DarkLightGame()
 		return degrees * (Math.PI/180);
 	}
 																//1			//1
-	function detectAngleCollision(	 ObjX,		 ObjY,		 ObjSizeX,	  ObjSizeY,   ObjAngle, 
+	function detectAngleCollision(	 ObjX,		 ObjY,		 ObjSizeX,	  ObjSizeY,   ObjAngle,
 									 WallX,	 WallY,	 WallSizeX,  WallSizeY,  WallAngle )
 	{
 		/*ctx.strokeStyle = "white";
@@ -1206,9 +1204,9 @@ function DarkLightGame()
 				ctx.fillStyle = "white";
 			if (tutorialtimer < 100)
 			{
-				
+
 				ctx.fillText("Walls are invisible and lethal", width/4 +30, height - 10);
-				
+
 			}
 			if (tutorialtimer >100 && tutorialtimer < 200)
 			{
@@ -1224,7 +1222,7 @@ function DarkLightGame()
 			}
 		}
 	}
-	
+
 
 	function Collision()
 	{
@@ -1274,7 +1272,7 @@ function DarkLightGame()
 									// detectAngleCollision(lightwaves[l].particles[p].x, lightwaves[l].particles[p].y, 0, 0, lightwaves[l].particles[p].direction,
 														//walls[w].x, walls[w].y, walls[w].length, walls[w].width, walls[w].angle) - toRadians(45);
 									lightwaves[l].particles[p].bounced = true;
-									
+
 
 								}
 								/*walls[w].r = 255;
@@ -1316,7 +1314,7 @@ function DarkLightGame()
 							//Player.y = height/2;
 
 							Player.animDie_play=true;
-							
+
 
 						}
 				}
@@ -1334,15 +1332,15 @@ function DarkLightGame()
 							}
 							else
 							{
-								lightwaves[l].particles[p].speed = 1;	
+								lightwaves[l].particles[p].speed = 1;
 							}
 						}
 					}
 				}
 			}
 		}
-	
-		
+
+
 	}
 
 	var Title =
@@ -1354,14 +1352,14 @@ function DarkLightGame()
 		constant: 1.2,
 
 		draw: function()
-		{	
+		{
 			ctx.font = "100px Idilica Regular";
 			ctx.fillStyle = 'rgba(255,255,255,' + (this.constant + Math.sin(this.theta)) + ')';
 			ctx.fillText(this.text, this.x, this.y);
-			this.theta += 0.1;		
+			this.theta += 0.1;
 		}
 
-			
+
 
 	}
 
@@ -1374,11 +1372,11 @@ function DarkLightGame()
 		constant: 1.2,
 
 		draw: function()
-		{	
+		{
 			ctx.font = "100px Idilica Regular";
 			ctx.fillStyle = 'rgba(255,255,255,' + (this.constant + Math.sin(this.theta)) + ')';
 			ctx.fillText(this.text, this.x, this.y);
-			this.theta += 0.1;	
+			this.theta += 0.1;
 
 			ctx.font = "20px Pixellari";
 			ctx.fillText("Press space to start over", width/2 - 50, height - 100);
@@ -1386,7 +1384,7 @@ function DarkLightGame()
 			Player.lives =3
 		}
 
-			
+
 
 	}
 
@@ -1399,11 +1397,11 @@ function DarkLightGame()
 		constant: 1.2,
 
 		draw: function()
-		{	
+		{
 			ctx.font = "100px Idilica Regular";
 			ctx.fillStyle = 'rgba(255,255,255,' + (this.constant + Math.sin(this.theta)) + ')';
 			ctx.fillText(this.text, this.x, this.y);
-			this.theta += 0.1;	
+			this.theta += 0.1;
 
 			ctx.font = "20px Pixellari";
 			ctx.fillText("Press space to start over", width/2 - 50, height - 100);
@@ -1411,7 +1409,7 @@ function DarkLightGame()
 			Player.lives = 3;
 		}
 
-			
+
 
 	}
 
@@ -1420,8 +1418,8 @@ function DarkLightGame()
 
 		switch (gamestate)
 		{
-			
-			
+
+
 			case 0:
 			{
 				pulse++;
@@ -1440,7 +1438,7 @@ function DarkLightGame()
 				for (var l = 0; l < lightwaves.length; l++)
 				{
 					for (var p = 0; p < lightwaves[l].particles.length; p++)
-					{	
+					{
 						lightwaves[l].particles[p].draw();
 					}
 					lightwaves[l].draw();
@@ -1448,7 +1446,7 @@ function DarkLightGame()
 				}
 
 				//Button(50, 50, 50, 50);
-				
+
 			}
 			break;
 			case 1:
@@ -1458,9 +1456,9 @@ function DarkLightGame()
 
 			{
 				ctx.drawImage(floor, 0,0);
-				
+
 				Player.draw();
-				
+
 				for (var r= 0; r < rocks.length; r++)
 				{
 					rocks[r].draw();
@@ -1479,7 +1477,7 @@ function DarkLightGame()
 				{
 					for (var p = 0; p < lightwaves[i].particles.length; p++)
 					{
-						lightwaves[i].particles[p].draw();	
+						lightwaves[i].particles[p].draw();
 					}
 					lightwaves[i].draw();
 					ctx.lineWidth = 1;
@@ -1489,7 +1487,7 @@ function DarkLightGame()
 				//ctx.fillText(textangle, mx+10, my+10);
 				//ctx.fillStyle = "white";
 				//ctx.fillText(Player.x + "," + Player.y, Player.x, Player.y);
-				
+
 				//ctx.drawImage(level1, -10,-10);
 				/*for (var rows = 0; rows < 700; rows+= 30)
 				{
@@ -1515,18 +1513,18 @@ function DarkLightGame()
 			{
 				pulse++;
 				if (pulse >200)
-				{	
+				{
 					pulse = 0;
 					var lightwave = new CreditLightwave(Math.random() * width, Math.random() * height, 500, 3);
 					lightwave.create();
 					lightwaves.push(lightwave);
 				}
 				Win.draw();
-				
+
 				for (var l = 0; l < lightwaves.length; l++)
 				{
 					for (var p = 0; p < lightwaves[l].particles.length; p++)
-					{	
+					{
 						lightwaves[l].particles[p].draw();
 					}
 					lightwaves[l].draw();
@@ -1538,15 +1536,15 @@ function DarkLightGame()
 				{
 
 				GameOver.draw();
-				
+
 				}
-			
+
 
 		}
-		
 
-		
- 	
+
+
+
 		/*ctx.beginPath();
 		ctx.arc(mouseX, mouseY, 5, 0, Math.PI*2, false);
 		ctx.closePath();
@@ -1561,14 +1559,14 @@ function DarkLightGame()
 	function Update(dt)
 	{
 		switch(gamestate)
-		{	
+		{
 			case 0:
 			{
 				Collision();
 				for (var l = 0; l < lightwaves.length; l++)
 				{
 					for (var p = 0; p < lightwaves[l].particles.length; p++)
-					{	
+					{
 						lightwaves[l].particles[p].update();
 					}
 					lightwaves[l].update();
@@ -1660,7 +1658,7 @@ function DarkLightGame()
 							SetUpLevel();
 							SetFloorTexture();
 						}
-						
+
 					}
 					break;
 					case 4:
@@ -1674,13 +1672,13 @@ function DarkLightGame()
 						break;
 					}
 
-				
+
 			}
 			case 5:
 			for (var l = 0; l < lightwaves.length; l++)
 				{
 					for (var p = 0; p < lightwaves[l].particles.length; p++)
-					{	
+					{
 						lightwaves[l].particles[p].update();
 					}
 					lightwaves[l].update();
@@ -1693,14 +1691,14 @@ function DarkLightGame()
 			//any other cases
 		}
 
-		
+
 
 	}
 
 	this.Setup = function()
 	{
 		//var wall = new Wall(1, 200);
-		
+
 		var button1 = new Button(width/2 - 80, height/2, 158,77, "PLAY");
 		button1.setup("Assets/UI/play_small.png");
 		buttons.push(button1);
@@ -1708,7 +1706,7 @@ function DarkLightGame()
 		music.play();
 
 
-		
+
 
 
 
@@ -1717,9 +1715,9 @@ function DarkLightGame()
 
 	function SetFloorTexture()
 	{
-		
+
 		floor.src = "pics/LEVEL_01/LEVEL_BG_01.png";
-	
+
 
 
 	}
@@ -1729,7 +1727,7 @@ function DarkLightGame()
 		var tile = 30;
 		Player.stones = 5;
 		walls.splice(0, walls.length);
-		switch (gamestate) 
+		switch (gamestate)
 		{
 		case 1:
 
@@ -1738,7 +1736,7 @@ function DarkLightGame()
 			levellabel.src = "Assets/LEVELS/Level_01_s.png";
 
 
-			
+
 			var wall1 = new Wall(0,0,"WIDE-23");
 			var wall2 = new Wall(0,0,"TALL-8");
 			var wall3 = new Wall(0, tile*8, "WIDE-2");
@@ -1765,7 +1763,7 @@ function DarkLightGame()
 			walls.push(wall9);
 			walls.push(wall10);
 			walls.push(wall11);
-		
+
 
 			for (var i = 0; i < walls.length; i++)
 			{
@@ -1773,7 +1771,7 @@ function DarkLightGame()
 			}
 
 		break;
-		case 3: 
+		case 3:
 
 			Player.x = 560;
 			Player.y = 590;
@@ -1808,7 +1806,7 @@ function DarkLightGame()
 			walls.push(wall12);
 			walls.push(wall13);
 			walls.push(wall14);
-		
+
 
 			for (var i = 0; i < walls.length; i++)
 			{
@@ -1830,7 +1828,7 @@ function DarkLightGame()
 			var wall6 = new Wall(tile*20, tile*3, "WIDE-2");
 
 			var wall7 = new Wall(tile*20, tile*6, "WIDE-2");
-			var wall8 = new Wall(tile*22, tile*6, "TALL-17"); 
+			var wall8 = new Wall(tile*22, tile*6, "TALL-17");
 			var wall9 = new Wall(tile*13, tile*22, "WIDE-9");
 			var wall10 = new Wall(tile*12, tile*13, "TALL-10");
 			var wall11 = new Wall(tile*7, tile*13, "WIDE-5");
@@ -1919,16 +1917,16 @@ function DarkLightGame()
 
 	this.gameLoop = function()							///MAIN GAME LOOP
 	{
-		
-		if (_this.pause == false) 
+
+		if (_this.pause == false)
 		{
 			loop = requestAnimationFrame(_this.gameLoop);
 		}
-		else 
+		else
 		{
 			return false;
 		}
-		
+
 		var now = new Date().getTime(),
 		dt = now - (timeAnimate || now);
 		timeAnimate = now;
@@ -1994,6 +1992,6 @@ function DarkLightGame()
 		 }
 
 	}
-	
+
 }
 //SOUNDS http://www.superflashbros.net/as3sfxr/
